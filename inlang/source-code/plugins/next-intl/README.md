@@ -6,12 +6,14 @@
 
 > We recommend using the install button, but if you want to do it manually:
 
-Add this to the modules in your `project.inlang/settings.json`
+- Add this to the modules in your `project.inlang/settings.json`
+- Change the `sourceLanuge` if needed 
+- Include existing languagetags in the `languageTags` array
 
 ```json
 {
 	"sourceLanguageTag": "en",
-	"languageTags": ["en", "de"], // add languageTags if needed
+	"languageTags": ["en", "de"], 
 	"modules": [
 		"https://cdn.jsdelivr.net/npm/@inlang/plugin-next-intl@1/dist/index.js",
   	],
@@ -103,7 +105,7 @@ The message IDs are sorted in the order in which they appear in the sourceLangua
 
 # Pricing 
 
-<doc-dev-tool-pricing></doc-dev-tool-pricing>
+<doc-pricing></doc-pricing>
 
 # Contributing
 

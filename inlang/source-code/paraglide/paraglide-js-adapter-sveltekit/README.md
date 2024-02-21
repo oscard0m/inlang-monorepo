@@ -206,6 +206,19 @@ Optional parameters, catch-all parameters and param matchers are not yet support
 
 > You need to use all parameters in all translations. If you don't, Paraglide will not be able to use the correct path.
 
+For convenience, you can also pass a message-function as the value of the pathnames object. 
+
+```js
+import { createI18n } from "@inlang/paraglide-js-adapter-sveltekit"
+import * as runtime from "../paraglide/runtime.js"
+import * as m from "../paraglide/messages.js"
+
+export const i18n = createI18n(runtime, {
+	// do not call the function - pass a reference
+	"/about" : m.about_path
+})
+```
+
 ## Customizing Link Translation
 
 Links are translated automatically using a preprocessor. This means that you can use the normal `a` tag and the adapter will translate it for you.
@@ -366,6 +379,16 @@ You can access the current language and text direction on `event.locals.paraglid
 	heading="My prerenderd pages include 'http://sveltekit-prerender', what's going on?"
 	text="There are some URLs that need to be fully qualified to be spec compliant. Usually SvelteKit
 	can guess the URL based on your current page, but during prerendering it has no idea where the files will be deployed, so it defaults to 'http://sveltekit-prerender'. You need to explicity tell it the URL of your Site. You can do this with the 'kit.prerender.origin' option in 'svelte.config.js'.">
+</doc-accordion>
+
+<doc-accordion
+	heading="Does this work with vite-plugin-kit-routes"
+	text="Yes! Vite-plugin-kit-routes should work with no additional configuration">
+</doc-accordion>
+
+<doc-accordion
+	heading="Can I dynamically fetch translations from an external server?"
+	text="Paraglide is a compiler, so all translations need to be known at build time. You can of course manually react to the current language & fetch external content, but you will end up implementing your own solution for dynamically fetched translations.">
 </doc-accordion>
 
 ## Roadmap

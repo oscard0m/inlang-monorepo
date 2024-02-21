@@ -2,6 +2,30 @@
 
 This plugin is a general purpose plugin to read and write messages of json files. It also determines how translation functions and namespaces are parsed and handled by the IDE extension.
 
+
+## Manual Installation
+
+> We recommend using the install button, but if you want to do it manually:
+
+- Add this to the modules in your `project.inlang/settings.json`
+- Change the `sourceLanuge` if needed 
+- Include existing languagetags in the `languageTags` array
+
+
+```json
+{
+	"sourceLanguageTag": "en",
+	"languageTags": ["en", "de"], 
+	"modules": [
+		"https://cdn.jsdelivr.net/npm/@inlang/plugin-json@latest/dist/index.js"
+  	],
+	"plugin.inlang.json": {
+		"pathPattern": "./resources/{languageTag}.json"
+  	}
+}
+```
+
+
 ## Example
 
 _messages/en.json_
@@ -103,7 +127,7 @@ The plugin can be used with the [IDE extension](https://inlang.com/m/r7kp499g/ap
 
 ## Pricing 
 
-<doc-dev-tool-pricing></doc-dev-tool-pricing>
+<doc-pricing></doc-pricing>
 
 # Contributing
 

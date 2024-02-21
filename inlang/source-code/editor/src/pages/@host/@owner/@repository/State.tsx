@@ -287,9 +287,14 @@ export function EditorStateProvider(props: { children: JSXElement }) {
 		setLixErrors(errors)
 	})
 
+	const isForkSyncDisabled = () =>
+		localStorage.disableForkSyncWarning?.some(
+			(repo) => repo.owner === routeParams().owner && repo.repository === routeParams().repository
+		)
+
 	const [forkStatus, { refetch: refetchForkStatus, mutate: mutateForkStatus }] = createResource(
 		() => {
-			if (repo()) {
+			if (repo() && !isForkSyncDisabled()) {
 				return repo()
 			} else {
 				return false
@@ -314,7 +319,7 @@ export function EditorStateProvider(props: { children: JSXElement }) {
 			if (args.repo?.nodeishFs === undefined) return []
 			const projects = await listProjects(args.repo?.nodeishFs, "/")
 
-			if (searchParams().project) {
+			if (searchParams().project && projects.some((project) => project.projectPath === searchParams().project)) {
 				setActiveProject(searchParams().project)
 			} else if (projects.length === 1) {
 				setActiveProject(projects[0]?.projectPath)

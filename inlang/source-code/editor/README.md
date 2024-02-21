@@ -32,10 +32,11 @@ Used by
 
 # Let's get started
 
-- Add a `project.inlang` folder to your repository
-- Create a `settings.json` file to that new dir `project.inlang/settings.json`
-- Install a plugin that reads and writes your messages from the [inlang marketplace](https://inlang.com/c/plugins)
-- Install lint rules to find errors in your translations from the [inlang marketplace](https://inlang.com/c/lint-rules)
+1. Add a `project.inlang` folder to your repository
+2. Create a `settings.json` file to that new dir `project.inlang/settings.json`
+3. Install a plugin that reads and writes your messages from the [inlang marketplace](https://inlang.com/c/plugins)
+---
+4. **Optional** Install lint rules to find errors in your translations from the [inlang marketplace](https://inlang.com/c/lint-rules)
 
 Look at the [example repository](https://github.com/opral/example) and it's [settings.json](https://github.com/opral/example/blob/main/project.inlang/settings.json) for a working example.
 
@@ -50,6 +51,10 @@ This is how the editor could look like for your project:
 # How to contribute translations
 
 [![Fink Guide Ad](https://cdn.jsdelivr.net/gh/opral/monorepo@latest/inlang/assets/marketplace/editor-guide-image.jpg) Read in-depth guide](https://inlang.com/g/6ddyhpoi/guide-nilsjacobsen-contributeTranslationsWithFink)
+
+# Pricing 
+ 
+<doc-pricing heading="Fink has and will have a free tier." content="In the future, we will likely monetize features that bring value to larger (enterprise) projects. If you have a small project, don't worry about paying for fink."></doc-pricing>
 
 # Login via GitHub
 

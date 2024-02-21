@@ -1,6 +1,5 @@
 import * as vscode from "vscode"
 import { msg } from "./utilities/messages/msg.js"
-import { propertiesMissingPreview } from "./decorations/propertiesMissingPreview.js"
 import { linterDiagnostics } from "./diagnostics/linterDiagnostics.js"
 import { handleError } from "./utilities/utils.js"
 import { CONFIGURATION } from "./configuration.js"
@@ -20,9 +19,13 @@ import { recommendationBannerView } from "./utilities/recommendation/recommendat
 import { telemetry } from "./services/telemetry/implementation.js"
 import { version } from "../package.json"
 import { statusBar } from "./utilities/settings/statusBar.js"
+//import { initErrorMonitoring } from "./services/error-monitoring/implementation.js"
 
 // Entry Point
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
+	// Sentry Error Handling
+	//initErrorMonitoring()
+
 	try {
 		vscode.commands.executeCommand("setContext", "inlang:hasProjectInWorkspace", false)
 		vscode.commands.executeCommand("setContext", "inlang:showRecommendationBanner", false)
@@ -142,7 +145,6 @@ function registerExtensionComponents(args: {
 	)
 
 	messagePreview(args)
-	propertiesMissingPreview()
 	linterDiagnostics(args)
 }
 
@@ -151,9 +153,4 @@ function handleInlangErrors() {
 	if (inlangErrors.length > 0) {
 		console.error("Inlang VSCode Extension errors:", inlangErrors)
 	}
-}
-
-// Helper Functions
-export function getActiveTextEditor(): vscode.TextEditor | undefined {
-	return vscode.window.activeTextEditor
 }

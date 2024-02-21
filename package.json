@@ -17,19 +17,17 @@
 		"build:no-nx": "pnpm --stream --parallel build",
 		"dev:no-nx": "pnpm --stream --parallel dev",
 		"dev:no-clear": "pnpm dev:no-nx | sed -u 's/\\x1Bc//g'",
-		"fetch-env:public": "pnpm --filter=@inlang/env-variables fetch-env:public",
 		"fetch-env:internal": "doppler secrets download --no-file --format env > .env",
 		"changeset": "npx changeset",
 		"clean": "pnpm recursive run clean && rm -rf ./.env ./node_modules",
 		"----- CI ---- used to test the codebase on every commit": "",
 		"ci": "pnpm install && pnpm check-all",
 		"check-all": "pnpm audit --audit-level=high && pnpm format && pnpm lint && pnpm build && pnpm test",
-		"ci:publish": "pnpm --filter !vs-code-extension publish -r",
-		"ci:version": "pnpm exec changeset version && pnpm install --lockfile-only"
+		"ci:publish": "pnpm --filter !vs-code-extension publish -r"
 	},
 	"engines": {
 		"npm": ">=8.0.0",
-		"node": ">=18.0.0"
+		"node": ">=18.17.0"
 	},
 	"pnpm": {
 		"overrides": {
@@ -38,6 +36,11 @@
 			"vitest": "0.34.6",
 			"@vitest/coverage-v8": "0.34.6",
 			"vite": "4.5.2"
+		},
+		"auditConfig": {
+			"ignoreCves": [
+				"CVE-2023-42282"
+			]
 		}
 	},
 	"devDependencies": {

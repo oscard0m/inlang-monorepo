@@ -41,7 +41,8 @@ export async function convert(markdown: string): Promise<string> {
 				"doc-accordion",
 				"doc-header",
 				"doc-image",
-				"doc-dev-tool-pricing",
+				"doc-pricing",
+				"doc-important",
 				...defaultSchema.tagNames!,
 			],
 			attributes: {
@@ -55,6 +56,8 @@ export async function convert(markdown: string): Promise<string> {
 				"doc-accordion": ["heading", "text"],
 				"doc-header": ["title", "description", "button", "link"],
 				"doc-image": ["src", "alt"],
+				"doc-important": ["title", "description"],
+				"doc-pricing": ["heading", "content"],
 				...defaultSchema.attributes,
 			},
 		})
@@ -84,7 +87,7 @@ export async function convert(markdown: string): Promise<string> {
 			tr: "doc-py-2 doc-border-b border-surface-2",
 			td: "doc-py-2 doc-leading-7",
 			hr: "doc-my-6 doc-border-b border-surface-200",
-			img: "doc-mx-auto doc-my-4 doc-rounded-xl doc-border border-surface-2",
+			img: "doc-mx-auto doc-my-4 doc-rounded",
 			strong: "doc-font-bold",
 		})
 		/* @ts-ignore */
