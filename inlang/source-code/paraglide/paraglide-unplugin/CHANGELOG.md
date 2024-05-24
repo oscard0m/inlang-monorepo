@@ -1,5 +1,11 @@
 # @inlang/paraglide-unplugin
 
+## 1.6.8
+
+### Patch Changes
+
+- e0b2c2c: Better hashing to avoid unnecessary recompilations
+
 ## 1.6.7
 
 ### Patch Changes
