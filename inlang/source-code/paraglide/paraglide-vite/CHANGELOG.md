@@ -1,5 +1,12 @@
 # @inlang/paraglide-vite
 
+## 1.2.58
+
+### Patch Changes
+
+- Updated dependencies [e0b2c2c]
+  - @inlang/paraglide-unplugin@1.6.8
+
 ## 1.2.57
 
 ### Patch Changes
