@@ -1,5 +1,108 @@
 # @inlang/sdk
 
+## 0.36.3
+
+### Patch Changes
+
+- Updated dependencies [e8d74b9]
+  - @lix-js/fs@2.2.0
+  - @inlang/plugin@2.4.14
+  - @lix-js/client@2.2.1
+  - @inlang/module@1.2.14
+
+## 0.36.2
+
+### Patch Changes
+
+- 2fc5feb: Better error-messages for cache-related issues
+
+## 0.36.1
+
+### Patch Changes
+
+- 1077e06: fix crash if `cache/modules` directory gets deleted
+
+## 0.36.0
+
+### Minor Changes
+
+- 8ec7b34: Modules are now cached locally using a "Network first" cache. This enables offline development
+
+### Patch Changes
+
+- 05f9282: Expose `ModuleError`s, enabling more fine-grained error-handling in Apps.
+
+## 0.35.9
+
+### Patch Changes
+
+- 8e9fc0f: Expose randomHumanId()
+
+## 0.35.8
+
+### Patch Changes
+
+- da7c207: fixes reactive alias by id map - to support experimental aliases flag again
+
+## 0.35.7
+
+### Patch Changes
+
+- 2a5645c: fix undefined lintreports for Ninja (MESDK-130)
+
+## 0.35.6
+
+### Patch Changes
+
+- 9d2aa1a: v2 message bundle persistence - initial store implementation
+
+## 0.35.5
+
+### Patch Changes
+
+- 64e30ee: introduces solid batching for loadViaPlugin
+
+## 0.35.4
+
+### Patch Changes
+
+- Updated dependencies [3b2e0a6]
+  - @lix-js/client@2.2.0
+
+## 0.35.3
+
+### Patch Changes
+
+- Updated dependencies [548bc9e]
+  - @lix-js/client@2.1.0
+
+## 0.35.2
+
+### Patch Changes
+
+- Updated dependencies [4a25124]
+  - @lix-js/fs@2.1.0
+  - @inlang/plugin@2.4.13
+  - @lix-js/client@2.0.1
+  - @inlang/module@1.2.13
+
+## 0.35.1
+
+### Patch Changes
+
+- Updated dependencies [00ad046]
+- Updated dependencies [00ad046]
+  - @lix-js/fs@2.0.0
+  - @lix-js/client@2.0.0
+  - @inlang/plugin@2.4.12
+  - @inlang/module@1.2.12
+
+## 0.35.0
+
+### Minor Changes
+
+- ae47203: improve: remove valid js identifer from default lint rules
+
 ## 0.34.10
 
 ### Patch Changes

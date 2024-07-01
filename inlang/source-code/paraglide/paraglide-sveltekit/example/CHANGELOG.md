@@ -1,5 +1,156 @@
 # @inlang/paraglide-sveltekit-example
 
+## 0.1.68
+
+### Patch Changes
+
+- Updated dependencies [5ec62a4]
+  - @inlang/paraglide-sveltekit@0.10.8
+
+## 0.1.67
+
+### Patch Changes
+
+- @inlang/paraglide-sveltekit@0.10.7
+
+## 0.1.66
+
+### Patch Changes
+
+- Updated dependencies [bcd894f]
+  - @inlang/paraglide-sveltekit@0.10.6
+
+## 0.1.65
+
+### Patch Changes
+
+- @inlang/paraglide-sveltekit@0.10.5
+
+## 0.1.64
+
+### Patch Changes
+
+- @inlang/paraglide-sveltekit@0.10.4
+
+## 0.1.63
+
+### Patch Changes
+
+- @inlang/paraglide-sveltekit@0.10.3
+
+## 0.1.62
+
+### Patch Changes
+
+- Updated dependencies [b5d4a4c]
+  - @inlang/paraglide-sveltekit@0.10.2
+
+## 0.1.61
+
+### Patch Changes
+
+- Updated dependencies [ecef103]
+  - @inlang/paraglide-sveltekit@0.10.1
+
+## 0.1.60
+
+### Patch Changes
+
+- Updated dependencies [928742b]
+  - @inlang/paraglide-sveltekit@0.10.0
+
+## 0.1.59
+
+### Patch Changes
+
+- @inlang/paraglide-sveltekit@0.9.7
+
+## 0.1.58
+
+### Patch Changes
+
+- Updated dependencies [1ea7b14]
+  - @inlang/paraglide-sveltekit@0.9.6
+
+## 0.1.57
+
+### Patch Changes
+
+- Updated dependencies [08a1e3f]
+  - @inlang/paraglide-sveltekit@0.9.5
+
+## 0.1.56
+
+### Patch Changes
+
+- @inlang/paraglide-sveltekit@0.9.4
+
+## 0.1.55
+
+### Patch Changes
+
+- Updated dependencies [def2d4e]
+  - @inlang/paraglide-sveltekit@0.9.3
+
+## 0.1.54
+
+### Patch Changes
+
+- @inlang/paraglide-sveltekit@0.9.2
+
+## 0.1.53
+
+### Patch Changes
+
+- Updated dependencies [f0192d2]
+- Updated dependencies [255fd41]
+  - @inlang/paraglide-sveltekit@0.9.1
+
+## 0.1.52
+
+### Patch Changes
+
+- Updated dependencies [6319391]
+- Updated dependencies [76e7f20]
+- Updated dependencies [8db2224]
+  - @inlang/paraglide-sveltekit@0.9.0
+
+## 0.1.51
+
+### Patch Changes
+
+- @inlang/paraglide-sveltekit@0.8.7
+
+## 0.1.50
+
+### Patch Changes
+
+- @inlang/paraglide-sveltekit@0.8.6
+
+## 0.1.49
+
+### Patch Changes
+
+- @inlang/paraglide-sveltekit@0.8.5
+
+## 0.1.48
+
+### Patch Changes
+
+- @inlang/paraglide-sveltekit@0.8.4
+
+## 0.1.47
+
+### Patch Changes
+
+- @inlang/paraglide-sveltekit@0.8.3
+
+## 0.1.46
+
+### Patch Changes
+
+- @inlang/paraglide-sveltekit@0.8.2
+
 ## 0.1.45
 
 ### Patch Changes

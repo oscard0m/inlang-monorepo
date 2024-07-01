@@ -4,10 +4,7 @@ import { mockRepo } from "@lix-js/client"
 import { defaultProjectSettings } from "./defaultProjectSettings.js"
 import { loadProject } from "./loadProject.js"
 import { createMessage } from "./test-utilities/createMessage.js"
-
-function sleep(ms: number) {
-	return new Promise((resolve) => setTimeout(resolve, ms))
-}
+import { sleep } from "./test-utilities/sleep.js"
 
 describe("createNewProject", () => {
 	it("should throw if a path does not end with .inlang", async () => {
@@ -83,7 +80,7 @@ describe("createNewProject", () => {
 		await createNewProject({ projectPath, repo, projectSettings: defaultProjectSettings })
 
 		const project = await loadProject({ projectPath, repo })
-		expect(project.errors().length).toBe(0)
+		expect(project.errors()).toEqual([])
 	})
 
 	it("should create messages inside the project directory", async () => {
@@ -91,7 +88,7 @@ describe("createNewProject", () => {
 		const projectPath = "/test/project.inlang"
 		await createNewProject({ projectPath, repo, projectSettings: defaultProjectSettings })
 		const project = await loadProject({ projectPath, repo })
-		expect(project.errors().length).toBe(0)
+		expect(project.errors()).toEqual([])
 
 		const testMessage = createMessage("test", { en: "test message" })
 		project.query.messages.create({ data: testMessage })

@@ -1,5 +1,125 @@
 # @inlang/plugin-next-intl
 
+## 1.3.49
+
+### Patch Changes
+
+- c26aac4: refactor icon
+
+## 1.3.48
+
+### Patch Changes
+
+- @inlang/sdk@0.36.3
+
+## 1.3.47
+
+### Patch Changes
+
+- Updated dependencies [2fc5feb]
+  - @inlang/sdk@0.36.2
+
+## 1.3.46
+
+### Patch Changes
+
+- Updated dependencies [1077e06]
+  - @inlang/sdk@0.36.1
+
+## 1.3.45
+
+### Patch Changes
+
+- Updated dependencies [8ec7b34]
+- Updated dependencies [05f9282]
+  - @inlang/sdk@0.36.0
+
+## 1.3.44
+
+### Patch Changes
+
+- Updated dependencies [8e9fc0f]
+  - @inlang/sdk@0.35.9
+
+## 1.3.43
+
+### Patch Changes
+
+- 04e804b: add human readble id tests to plugins
+- aa91877: add more extract options
+
+## 1.3.42
+
+### Patch Changes
+
+- Updated dependencies [da7c207]
+  - @inlang/sdk@0.35.8
+
+## 1.3.41
+
+### Patch Changes
+
+- 2b36271: add changeset
+
+## 1.3.40
+
+### Patch Changes
+
+- Updated dependencies [2a5645c]
+  - @inlang/sdk@0.35.7
+
+## 1.3.39
+
+### Patch Changes
+
+- Updated dependencies [9d2aa1a]
+  - @inlang/sdk@0.35.6
+
+## 1.3.38
+
+### Patch Changes
+
+- 6a37426: support more flexible hooks argument passing
+- c780d2f: improve namespace parser to catch hooks sequentially
+
+## 1.3.37
+
+### Patch Changes
+
+- Updated dependencies [64e30ee]
+  - @inlang/sdk@0.35.5
+
+## 1.3.36
+
+### Patch Changes
+
+- @inlang/sdk@0.35.4
+
+## 1.3.35
+
+### Patch Changes
+
+- @inlang/sdk@0.35.3
+
+## 1.3.34
+
+### Patch Changes
+
+- @inlang/sdk@0.35.2
+
+## 1.3.33
+
+### Patch Changes
+
+- @inlang/sdk@0.35.1
+
+## 1.3.32
+
+### Patch Changes
+
+- Updated dependencies [ae47203]
+  - @inlang/sdk@0.35.0
+
 ## 1.3.31
 
 ### Patch Changes

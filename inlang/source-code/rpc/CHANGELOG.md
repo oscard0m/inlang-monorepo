@@ -1,5 +1,106 @@
 # @inlang/rpc
 
+## 0.3.36
+
+### Patch Changes
+
+- Updated dependencies [1ef9a0e]
+  - @inlang/marketplace-registry@1.5.10
+
+## 0.3.35
+
+### Patch Changes
+
+- @inlang/sdk@0.36.3
+
+## 0.3.34
+
+### Patch Changes
+
+- Updated dependencies [2fc5feb]
+  - @inlang/sdk@0.36.2
+
+## 0.3.33
+
+### Patch Changes
+
+- Updated dependencies [1077e06]
+  - @inlang/sdk@0.36.1
+
+## 0.3.32
+
+### Patch Changes
+
+- Updated dependencies [8ec7b34]
+- Updated dependencies [05f9282]
+  - @inlang/sdk@0.36.0
+
+## 0.3.31
+
+### Patch Changes
+
+- Updated dependencies [8e9fc0f]
+  - @inlang/sdk@0.35.9
+
+## 0.3.30
+
+### Patch Changes
+
+- Updated dependencies [da7c207]
+  - @inlang/sdk@0.35.8
+
+## 0.3.29
+
+### Patch Changes
+
+- Updated dependencies [2a5645c]
+  - @inlang/sdk@0.35.7
+
+## 0.3.28
+
+### Patch Changes
+
+- Updated dependencies [9d2aa1a]
+  - @inlang/sdk@0.35.6
+
+## 0.3.27
+
+### Patch Changes
+
+- Updated dependencies [64e30ee]
+  - @inlang/sdk@0.35.5
+
+## 0.3.26
+
+### Patch Changes
+
+- @inlang/sdk@0.35.4
+
+## 0.3.25
+
+### Patch Changes
+
+- @inlang/sdk@0.35.3
+
+## 0.3.24
+
+### Patch Changes
+
+- @inlang/sdk@0.35.2
+
+## 0.3.23
+
+### Patch Changes
+
+- @inlang/sdk@0.35.1
+
+## 0.3.22
+
+### Patch Changes
+
+- Updated dependencies [ae47203]
+  - @inlang/sdk@0.35.0
+
 ## 0.3.21
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 import type { MessageBundle } from "../../types.js"
 
-export const bundle: MessageBundle = {
+export const pluralBundle: MessageBundle = {
 	id: "mock_bundle_human_id",
 	alias: {
 		default: "mock_bundle_alias",
@@ -17,6 +17,28 @@ export const bundle: MessageBundle = {
 						arg: {
 							type: "variable",
 							name: "numProducts",
+						},
+					},
+				},
+				{
+					type: "input",
+					name: "count",
+					value: {
+						type: "expression",
+						arg: {
+							type: "variable",
+							name: "count",
+						},
+					},
+				},
+				{
+					type: "input",
+					name: "projectCount",
+					value: {
+						type: "expression",
+						arg: {
+							type: "variable",
+							name: "projectCount",
 						},
 					},
 				},

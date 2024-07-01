@@ -1,5 +1,109 @@
 # @inlang/plugin-i18next
 
+## 4.14.13
+
+### Patch Changes
+
+- @inlang/sdk@0.36.3
+
+## 4.14.12
+
+### Patch Changes
+
+- Updated dependencies [2fc5feb]
+  - @inlang/sdk@0.36.2
+
+## 4.14.11
+
+### Patch Changes
+
+- Updated dependencies [1077e06]
+  - @inlang/sdk@0.36.1
+
+## 4.14.10
+
+### Patch Changes
+
+- Updated dependencies [8ec7b34]
+- Updated dependencies [05f9282]
+  - @inlang/sdk@0.36.0
+
+## 4.14.9
+
+### Patch Changes
+
+- Updated dependencies [8e9fc0f]
+  - @inlang/sdk@0.35.9
+
+## 4.14.8
+
+### Patch Changes
+
+- 04e804b: add human readble id tests to plugins
+
+## 4.14.7
+
+### Patch Changes
+
+- Updated dependencies [da7c207]
+  - @inlang/sdk@0.35.8
+
+## 4.14.6
+
+### Patch Changes
+
+- Updated dependencies [2a5645c]
+  - @inlang/sdk@0.35.7
+
+## 4.14.5
+
+### Patch Changes
+
+- Updated dependencies [9d2aa1a]
+  - @inlang/sdk@0.35.6
+
+## 4.14.4
+
+### Patch Changes
+
+- Updated dependencies [64e30ee]
+  - @inlang/sdk@0.35.5
+
+## 4.14.3
+
+### Patch Changes
+
+- @inlang/sdk@0.35.4
+
+## 4.14.2
+
+### Patch Changes
+
+- @inlang/sdk@0.35.3
+
+## 4.14.1
+
+### Patch Changes
+
+- @inlang/sdk@0.35.2
+
+## 4.14.0
+
+### Minor Changes
+
+- c64f346: increase batching to 50 for i18n plugin
+
+### Patch Changes
+
+- @inlang/sdk@0.35.1
+
+## 4.13.41
+
+### Patch Changes
+
+- Updated dependencies [ae47203]
+  - @inlang/sdk@0.35.0
+
 ## 4.13.40
 
 ### Patch Changes

@@ -1,5 +1,187 @@
 # @inlang/paraglide-sveltekit
 
+## 0.10.8
+
+### Patch Changes
+
+- 5ec62a4: Fixes a couple issues with the base-path during prerendering
+  - SSRd language during prerendering is now correct when using a base-path
+  - Alternate links are correctly generated during prerendering
+
+## 0.10.7
+
+### Patch Changes
+
+- Updated dependencies [e37eabf]
+  - @inlang/paraglide-js@1.11.0
+  - @lix-js/client@2.2.1
+  - @inlang/paraglide-vite@1.2.72
+
+## 0.10.6
+
+### Patch Changes
+
+- bcd894f: `init` command now generates the `src/lib` directory if it does not exist. Previously it would just crash
+  - @inlang/paraglide-js@1.10.1
+  - @inlang/paraglide-vite@1.2.71
+
+## 0.10.5
+
+### Patch Changes
+
+- Updated dependencies [c5d145d]
+  - @inlang/paraglide-js@1.10.1
+  - @inlang/paraglide-vite@1.2.70
+
+## 0.10.4
+
+### Patch Changes
+
+- Updated dependencies [33662e6]
+  - @inlang/paraglide-js@1.10.0
+  - @inlang/paraglide-vite@1.2.69
+
+## 0.10.3
+
+### Patch Changes
+
+- @inlang/paraglide-js@1.9.1
+- @inlang/paraglide-vite@1.2.68
+
+## 0.10.2
+
+### Patch Changes
+
+- b5d4a4c: fix regression with `exclude` option
+
+## 0.10.1
+
+### Patch Changes
+
+- ecef103: fix how `AsyncLocalStorage` is handled accross requests
+
+## 0.10.0
+
+### Minor Changes
+
+- 928742b: Make `languageTag()` and message functions available in server-side load function.
+
+  This eliminates the need for
+
+  - `event.locals.paraglide.lang` anywhere.
+  - Manually passing the language tag to message functions that are used in load functions / actions.
+
+## 0.9.7
+
+### Patch Changes
+
+- @inlang/paraglide-js@1.9.1
+- @inlang/paraglide-vite@1.2.67
+
+## 0.9.6
+
+### Patch Changes
+
+- 1ea7b14: Explicitly mark `paraglide:lang` cookie as _not_ `HttpOnly`.
+  - @inlang/paraglide-js@1.9.1
+
+## 0.9.5
+
+### Patch Changes
+
+- 08a1e3f: Fix translation of hrefs that don't include a path. This is especially important with form actions.
+
+## 0.9.4
+
+### Patch Changes
+
+- @inlang/paraglide-js@1.9.1
+- @inlang/paraglide-vite@1.2.66
+
+## 0.9.3
+
+### Patch Changes
+
+- def2d4e: fix: Also update the `paraglide:lang` cookie on the client to allow for better language negotiation
+  - @inlang/paraglide-js@1.9.1
+  - @inlang/paraglide-vite@1.2.65
+
+## 0.9.2
+
+### Patch Changes
+
+- @inlang/paraglide-js@1.9.1
+- @inlang/paraglide-vite@1.2.64
+
+## 0.9.1
+
+### Patch Changes
+
+- f0192d2: Invalid `href`s in your app no longer cause errors to be thrown in `<ParaglideJS>`. During development a warning is logged.
+- 255fd41: The link preprocessor no longer crashes when encountering a file with a syntax error. Insetad it will log a warning & noop. Reporting the error is delegated to the main svelte parser.
+
+## 0.9.0
+
+### Minor Changes
+
+- 76e7f20: Add the `ParaglideLocals` interface for properly typing paraglide's locals. It should be added in `app.d.ts` under `Locals.paraglide`. The `init` CLI will do this automatically
+- 8db2224: Previously, if the default language was available on the root `/`, then it would still be available under `/[lang]`. This was never intended & no longer the case.
+
+  If you still want this behavior set the `prefixDefaultLanguage` to `"always"` in your `i18n` config.
+
+### Patch Changes
+
+- 6319391: Fix: Excluded routes now use the default language instead of incorrecly attempting to detect the language form the URL
+
+## 0.8.7
+
+### Patch Changes
+
+- @inlang/paraglide-js@1.9.1
+- @inlang/paraglide-vite@1.2.63
+
+## 0.8.6
+
+### Patch Changes
+
+- Updated dependencies [3b2e0a6]
+  - @lix-js/client@2.2.0
+  - @inlang/paraglide-js@1.9.1
+  - @inlang/paraglide-vite@1.2.62
+
+## 0.8.5
+
+### Patch Changes
+
+- Updated dependencies [548bc9e]
+  - @lix-js/client@2.1.0
+  - @inlang/paraglide-js@1.9.1
+  - @inlang/paraglide-vite@1.2.61
+
+## 0.8.4
+
+### Patch Changes
+
+- @inlang/paraglide-js@1.9.1
+- @lix-js/client@2.0.1
+- @inlang/paraglide-vite@1.2.60
+
+## 0.8.3
+
+### Patch Changes
+
+- Updated dependencies [00ad046]
+  - @lix-js/client@2.0.0
+  - @inlang/paraglide-js@1.9.1
+  - @inlang/paraglide-vite@1.2.59
+
+## 0.8.2
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.58
+- @inlang/paraglide-js@1.9.1
+
 ## 0.8.1
 
 ### Patch Changes

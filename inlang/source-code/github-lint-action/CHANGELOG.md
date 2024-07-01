@@ -1,5 +1,125 @@
 # @inlang/github-lint-action
 
+## 0.3.19
+
+### Patch Changes
+
+- 250d76d: Fix missing comment if PR already has a comment
+
+## 0.3.18
+
+### Patch Changes
+
+- 123d206: Add comment logging
+
+## 0.3.17
+
+### Patch Changes
+
+- Updated dependencies [e8d74b9]
+  - @lix-js/fs@2.2.0
+  - @inlang/sdk@0.36.3
+  - @lix-js/client@2.2.1
+
+## 0.3.16
+
+### Patch Changes
+
+- Updated dependencies [2fc5feb]
+  - @inlang/sdk@0.36.2
+
+## 0.3.15
+
+### Patch Changes
+
+- Updated dependencies [1077e06]
+  - @inlang/sdk@0.36.1
+
+## 0.3.14
+
+### Patch Changes
+
+- Updated dependencies [8ec7b34]
+- Updated dependencies [05f9282]
+  - @inlang/sdk@0.36.0
+
+## 0.3.13
+
+### Patch Changes
+
+- Updated dependencies [8e9fc0f]
+  - @inlang/sdk@0.35.9
+
+## 0.3.12
+
+### Patch Changes
+
+- Updated dependencies [da7c207]
+  - @inlang/sdk@0.35.8
+
+## 0.3.11
+
+### Patch Changes
+
+- Updated dependencies [2a5645c]
+  - @inlang/sdk@0.35.7
+
+## 0.3.10
+
+### Patch Changes
+
+- Updated dependencies [9d2aa1a]
+  - @inlang/sdk@0.35.6
+
+## 0.3.9
+
+### Patch Changes
+
+- Updated dependencies [64e30ee]
+  - @inlang/sdk@0.35.5
+
+## 0.3.8
+
+### Patch Changes
+
+- Updated dependencies [3b2e0a6]
+  - @lix-js/client@2.2.0
+  - @inlang/sdk@0.35.4
+
+## 0.3.7
+
+### Patch Changes
+
+- Updated dependencies [548bc9e]
+  - @lix-js/client@2.1.0
+  - @inlang/sdk@0.35.3
+
+## 0.3.6
+
+### Patch Changes
+
+- Updated dependencies [4a25124]
+  - @lix-js/fs@2.1.0
+  - @inlang/sdk@0.35.2
+  - @lix-js/client@2.0.1
+
+## 0.3.5
+
+### Patch Changes
+
+- Updated dependencies [00ad046]
+- Updated dependencies [00ad046]
+  - @lix-js/fs@2.0.0
+  - @lix-js/client@2.0.0
+  - @inlang/sdk@0.35.1
+
+## 0.3.4
+
+### Patch Changes
+
+- Updated dependencies [ae47203]
+  - @inlang/sdk@0.35.0
+
 ## 0.3.3
 
 ### Patch Changes

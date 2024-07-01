@@ -4,6 +4,8 @@ import type {
 	InstalledMessageLintRule,
 	InstalledPlugin,
 	Subscribable,
+	MessageQueryApi,
+	MessageLintReportsQueryApi,
 } from "./api.js"
 import { type ImportFunction, resolveModules } from "./resolve-modules/index.js"
 import { TypeCompiler, ValueErrorType } from "@sinclair/typebox/compiler"
@@ -19,16 +21,23 @@ import { ProjectSettings, type NodeishFilesystemSubset } from "./versionedInterf
 import { tryCatch, type Result } from "@inlang/result"
 import { migrateIfOutdated } from "@inlang/project-settings/migration"
 import { createNodeishFsWithAbsolutePaths } from "./createNodeishFsWithAbsolutePaths.js"
+import { createNodeishFsWithWatcher } from "./createNodeishFsWithWatcher.js"
 import { normalizePath } from "@lix-js/fs"
 import { assertValidProjectPath } from "./validateProjectPath.js"
+
+// Migrations
 import { maybeMigrateToDirectory } from "./migrations/migrateToDirectory.js"
+import { maybeCreateFirstProjectId } from "./migrations/maybeCreateFirstProjectId.js"
+import { maybeAddModuleCache } from "./migrations/maybeAddModuleCache.js"
 
 import type { Repository } from "@lix-js/client"
 
-import { maybeCreateFirstProjectId } from "./migrations/maybeCreateFirstProjectId.js"
-
 import { capture } from "./telemetry/capture.js"
 import { identifyProject } from "./telemetry/groupIdentify.js"
+
+import { stubMessagesQuery, stubMessageLintReportsQuery } from "./v2/stubQueryApi.js"
+import type { StoreApi } from "./persistence/storeApi.js"
+import { openStore } from "./persistence/store.js"
 
 import _debug from "debug"
 const debug = _debug("sdk:loadProject")
@@ -68,6 +77,7 @@ export async function loadProject(args: {
 
 	await maybeMigrateToDirectory({ nodeishFs, projectPath })
 	await maybeCreateFirstProjectId({ projectPath, repo: args.repo })
+	await maybeAddModuleCache({ projectPath, repo: args.repo })
 
 	// -- load project ------------------------------------------------------
 
@@ -80,37 +90,30 @@ export async function loadProject(args: {
 		)
 
 		const [initialized, markInitAsComplete, markInitAsFailed] = createAwaitable()
+		const [loadedSettings, markSettingsAsLoaded, markSettingsAsFailed] = createAwaitable()
+
+		const [resolvedModules, setResolvedModules] =
+			createSignal<Awaited<ReturnType<typeof resolveModules>>>()
 		// -- settings ------------------------------------------------------------
 
 		const [settings, _setSettings] = createSignal<ProjectSettings>()
-		createEffect(() => {
-			// TODO:
-			// if (projectId) {
-			// 	telemetryBrowser.group("project", projectId, {
-			// 		name: projectId,
-			// 	})
-			// }
+		let v2Persistence = false
+		let locales: string[] = []
 
-			loadSettings({ settingsFilePath: projectPath + "/settings.json", nodeishFs })
-				.then((settings) => setSettings(settings))
-				.catch((err) => {
-					markInitAsFailed(err)
-				})
-		})
-		// TODO: create FS watcher and update settings on change
+		// TODO:
+		// if (projectId) {
+		// 	telemetryBrowser.group("project", projectId, {
+		// 		name: projectId,
+		// 	})
+		// }
 
-		const writeSettingsToDisk = skipFirst((settings: ProjectSettings) =>
-			_writeSettingsToDisk({ nodeishFs, settings, projectPath })
-		)
-
-		const setSettings = (settings: ProjectSettings): Result<void, ProjectSettingsInvalidError> => {
+		const setSettings = (
+			newSettings: ProjectSettings
+		): Result<ProjectSettings, ProjectSettingsInvalidError> => {
 			try {
-				const validatedSettings = parseSettings(settings)
-				if (validatedSettings.experimental?.persistence) {
-					settings["plugin.sdk.persistence"] = {
-						pathPattern: projectPath + "/messages.json",
-					}
-				}
+				const validatedSettings = parseSettings(newSettings)
+				v2Persistence = !!validatedSettings.experimental?.persistence
+				locales = validatedSettings.languageTags
 
 				batch(() => {
 					// reset the resolved modules first - since they are no longer valid at that point
@@ -118,69 +121,78 @@ export async function loadProject(args: {
 					_setSettings(validatedSettings)
 				})
 
-				writeSettingsToDisk(validatedSettings)
-				return { data: undefined }
+				return { data: validatedSettings }
 			} catch (error: unknown) {
 				if (error instanceof ProjectSettingsInvalidError) {
 					return { error }
 				}
 
 				throw new Error(
-					"Unhandled error in setSettings. This is an internal bug. Please file an issue."
+					"Unhandled error in setSettings. This is an internal bug. Please file an issue.",
+					{ cause: error }
 				)
 			}
 		}
 
-		// -- resolvedModules -----------------------------------------------------------
+		const nodeishFsWithWatchersForSettings = createNodeishFsWithWatcher({
+			nodeishFs: nodeishFs,
+			onChange: async () => {
+				const readSettingsResult = await tryCatch(
+					async () =>
+						await loadSettings({
+							settingsFilePath: projectPath + "/settings.json",
+							nodeishFs: nodeishFs,
+						})
+				)
 
-		const [resolvedModules, setResolvedModules] =
-			createSignal<Awaited<ReturnType<typeof resolveModules>>>()
+				if (readSettingsResult.error) return
+				const newSettings = readSettingsResult.data
+
+				if (JSON.stringify(newSettings) !== JSON.stringify(settings())) {
+					setSettings(newSettings)
+				}
+			},
+		})
+
+		const settingsResult = await tryCatch(
+			async () =>
+				await loadSettings({
+					settingsFilePath: projectPath + "/settings.json",
+					nodeishFs: nodeishFsWithWatchersForSettings,
+				})
+		)
+
+		if (settingsResult.error) {
+			markInitAsFailed(settingsResult.error)
+			markSettingsAsFailed(settingsResult.error)
+		} else {
+			setSettings(settingsResult.data)
+			markSettingsAsLoaded()
+		}
+
+		// -- resolvedModules -----------------------------------------------------------
 
 		createEffect(() => {
 			const _settings = settings()
 			if (!_settings) return
 
-			resolveModules({ settings: _settings, nodeishFs, _import: args._import })
+			resolveModules({
+				settings: _settings,
+				nodeishFs,
+				_import: args._import,
+				projectPath,
+			})
 				.then((resolvedModules) => {
 					setResolvedModules(resolvedModules)
 				})
 				.catch((err) => markInitAsFailed(err))
 		})
 
-		// -- messages ----------------------------------------------------------
+		// -- installed items ----------------------------------------------------
 
 		let settingsValue: ProjectSettings
-		createEffect(() => (settingsValue = settings()!)) // workaround to not run effects twice (e.g. settings change + modules change) (I'm sure there exists a solid way of doing this, but I haven't found it yet)
-
-		const [loadMessagesViaPluginError, setLoadMessagesViaPluginError] = createSignal<
-			Error | undefined
-		>()
-
-		const [saveMessagesViaPluginError, setSaveMessagesViaPluginError] = createSignal<
-			Error | undefined
-		>()
-
-		const messagesQuery = createMessagesQuery({
-			projectPath,
-			nodeishFs,
-			settings,
-			resolvedModules,
-			onInitialMessageLoadResult: (e) => {
-				if (e) {
-					markInitAsFailed(e)
-				} else {
-					markInitAsComplete()
-				}
-			},
-			onLoadMessageResult: (e) => {
-				setLoadMessagesViaPluginError(e)
-			},
-			onSaveMessageResult: (e) => {
-				setSaveMessagesViaPluginError(e)
-			},
-		})
-
-		// -- installed items ----------------------------------------------------
+		// workaround to not run effects twice (e.g. settings change + modules change) (I'm sure there exists a solid way of doing this, but I haven't found it yet)
+		createEffect(() => (settingsValue = settings()!))
 
 		const installedMessageLintRules = () => {
 			if (!resolvedModules()) return []
@@ -213,16 +225,68 @@ export async function loadProject(args: {
 			})) satisfies Array<InstalledPlugin>
 		}
 
+		// -- messages ----------------------------------------------------------
+
+		const [loadMessagesViaPluginError, setLoadMessagesViaPluginError] = createSignal<
+			Error | undefined
+		>()
+
+		const [saveMessagesViaPluginError, setSaveMessagesViaPluginError] = createSignal<
+			Error | undefined
+		>()
+
+		let messagesQuery: MessageQueryApi
+		let lintReportsQuery: MessageLintReportsQueryApi
+		let store: StoreApi | undefined
+
+		// wait for seetings to load v2Persistence flag
+		// .catch avoids throwing here if the awaitable is rejected
+		// error is recorded via markInitAsFailed so no need to capture it again
+		await loadedSettings.catch(() => {})
+
+		if (v2Persistence) {
+			messagesQuery = stubMessagesQuery
+			lintReportsQuery = stubMessageLintReportsQuery
+			try {
+				store = await openStore({ projectPath, nodeishFs, locales })
+				markInitAsComplete()
+			} catch (e) {
+				markInitAsFailed(e)
+			}
+		} else {
+			messagesQuery = createMessagesQuery({
+				projectPath,
+				nodeishFs,
+				settings,
+				resolvedModules,
+				onInitialMessageLoadResult: (e) => {
+					if (e) {
+						markInitAsFailed(e)
+					} else {
+						markInitAsComplete()
+					}
+				},
+				onLoadMessageResult: (e) => {
+					setLoadMessagesViaPluginError(e)
+				},
+				onSaveMessageResult: (e) => {
+					setSaveMessagesViaPluginError(e)
+				},
+			})
+
+			lintReportsQuery = createMessageLintReportsQuery(
+				messagesQuery,
+				settings as () => ProjectSettings,
+				installedMessageLintRules,
+				resolvedModules
+			)
+
+			store = undefined
+		}
+
 		// -- app ---------------------------------------------------------------
 
 		const initializeError: Error | undefined = await initialized.catch((error) => error)
-
-		const lintReportsQuery = createMessageLintReportsQuery(
-			messagesQuery,
-			settings as () => ProjectSettings,
-			installedMessageLintRules,
-			resolvedModules
-		)
 
 		/**
 		 * Utility to escape reactive tracking and avoid multiple calls to
@@ -250,6 +314,8 @@ export async function loadProject(args: {
 					settings: settings(),
 					installedPluginIds: installedPlugins().map((p) => p.id),
 					installedMessageLintRuleIds: installedMessageLintRules().map((r) => r.id),
+					// TODO: fix for v2Persistence
+					// https://github.com/opral/inlang-message-sdk/issues/78
 					numberOfMessages: messagesQuery.includedMessageIds().length,
 				},
 			})
@@ -270,12 +336,17 @@ export async function loadProject(args: {
 				//...(lintErrors() ?? []),
 			]),
 			settings: createSubscribable(() => settings() as ProjectSettings),
-			setSettings,
+			setSettings: (newSettings: ProjectSettings): Result<void, ProjectSettingsInvalidError> => {
+				const result = setSettings(newSettings)
+				if (!result.error) writeSettingsToDisk({ nodeishFs, settings: result.data, projectPath })
+				return result.error ? result : { data: undefined }
+			},
 			customApi: createSubscribable(() => resolvedModules()?.resolvedPluginApi.customApi || {}),
 			query: {
 				messages: messagesQuery,
 				messageLintReports: lintReportsQuery,
 			},
+			store,
 		} satisfies InlangProject
 	})
 }
@@ -306,6 +377,9 @@ const loadSettings = async (args: {
 	return parseSettings(json.data)
 }
 
+/**
+ * @throws If the settings are not valid
+ */
 const parseSettings = (settings: unknown) => {
 	const withMigration = migrateIfOutdated(settings as any)
 	if (settingsCompiler.Check(withMigration) === false) {
@@ -337,26 +411,24 @@ const parseSettings = (settings: unknown) => {
 	return withMigration
 }
 
-const _writeSettingsToDisk = async (args: {
+const writeSettingsToDisk = async (args: {
 	projectPath: string
 	nodeishFs: NodeishFilesystemSubset
 	settings: ProjectSettings
 }) => {
-	const { data: serializedSettings, error: serializeSettingsError } = tryCatch(() =>
+	const serializeResult = tryCatch(() =>
 		// TODO: this will probably not match the original formatting
 		JSON.stringify(args.settings, undefined, 2)
 	)
-	if (serializeSettingsError) {
-		throw serializeSettingsError
-	}
+	if (serializeResult.error) throw serializeResult.error
+	const serializedSettings = serializeResult.data
 
-	const { error: writeSettingsError } = await tryCatch(async () =>
-		args.nodeishFs.writeFile(args.projectPath + "/settings.json", serializedSettings)
+	const writeResult = await tryCatch(
+		async () =>
+			await args.nodeishFs.writeFile(args.projectPath + "/settings.json", serializedSettings)
 	)
 
-	if (writeSettingsError) {
-		throw writeSettingsError
-	}
+	if (writeResult.error) throw writeResult.error
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -375,18 +447,6 @@ const createAwaitable = () => {
 		resolve: () => void,
 		reject: (e: unknown) => void
 	]
-}
-
-// Skip initial call, eg. to skip setup of a createEffect
-function skipFirst(func: (args: any) => any) {
-	let initial = false
-	return function (...args: any) {
-		if (initial) {
-			// @ts-ignore
-			return func.apply(this, args)
-		}
-		initial = true
-	}
 }
 
 export function createSubscribable<T>(signal: () => T): Subscribable<T> {

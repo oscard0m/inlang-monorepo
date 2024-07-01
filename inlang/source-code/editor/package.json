@@ -1,5 +1,6 @@
 {
 	"name": "@inlang/editor",
+	"version": "0.1.8",
 	"type": "module",
 	"private": true,
 	"scripts": {
@@ -7,7 +8,6 @@
 		"build": "node ./scripts/updateVersion.js && vite build -- --max_old_space_size=1200000 && tsc --noEmit",
 		"production": "NODE_ENV=production tsx ./src/server/main.ts",
 		"---- TEST ----------------------------------------------------------": "",
-		"test": "paraglide-js compile --project ../../../project.inlang",
 		"lint": "eslint ./src --fix",
 		"format": "prettier ./src --write",
 		"clean": "rm -rf ./dist ./node_modules"
@@ -68,14 +68,13 @@
 		"@iconify-json/cib": "^1.1.2",
 		"@iconify-json/material-symbols": "^1.1.26",
 		"@inlang/cli": "workspace:*",
+		"@inlang/recommend-ninja": "workspace:*",
 		"@inlang/design-system": "workspace:*",
 		"@inlang/detect-json-formatting": "workspace:*",
 		"@inlang/env-variables": "workspace:*",
 		"@inlang/markdown": "workspace:*",
 		"@inlang/marketplace-manifest": "workspace:*",
 		"@inlang/marketplace-registry": "workspace:*",
-		"@inlang/paraglide-js": "workspace:*",
-		"@inlang/paraglide-vite": "workspace:*",
 		"@inlang/result": "workspace:*",
 		"@inlang/rpc": "workspace:*",
 		"@inlang/sdk": "workspace:*",
@@ -99,7 +98,7 @@
 		"typescript": "5.2.2",
 		"unplugin-icons": "^0.15.0",
 		"vike": "0.4.149",
-		"vite": "4.5.0",
+		"vite": "^4.5.0",
 		"vite-plugin-node-polyfills": "0.17.0",
 		"vite-plugin-solid": "2.7.0",
 		"vite-plugin-watch": "0.2.0",
@@ -108,6 +107,5 @@
 	"peerDependencies": {
 		"express": "^4.18.2"
 	},
-	"license": "Apache-2.0",
-	"version": null
+	"license": "Apache-2.0"
 }

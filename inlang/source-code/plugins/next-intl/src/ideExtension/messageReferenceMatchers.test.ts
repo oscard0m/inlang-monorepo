@@ -109,6 +109,19 @@ it.skip("should ignore whitespace", async () => {
 	).toBe('"some-id"')
 })
 
+it(`should detect human readable id t("penguin_purple_shoe_window")`, async () => {
+	const sourceCode = `
+	const x = t("penguin_purple_shoe_window")
+	`
+	const settings: PluginSettings = {
+		pathPattern: "./{language}.json",
+	}
+	const matches = parse(sourceCode, settings)
+	expect(matches[0]?.messageId).toBe("penguin_purple_shoe_window")
+	expect(matches[0]?.position.start.character).toBe(14)
+	expect(matches[0]?.position.end.character).toBe(42)
+})
+
 it("should detect combined message.attribute ids", async () => {
 	const sourceCode = ` t('some-message.with-attribute')`
 	const settings: PluginSettings = {
@@ -151,6 +164,28 @@ it("should work on a production JSX example", async () => {
 	expect(matches[0]?.messageId).toBe("hello-world")
 	expect(matches[1]?.messageId).toBe("404.title")
 	expect(matches[2]?.messageId).toBe("421.message")
+})
+
+it("should add the defined namespace by useTranslations/getTranslaton hook", async () => {
+	const sourceCode = `
+		import { getTranslations } from "next-intl/server";
+
+		export const C1 = async () => {
+			const t = await getTranslations("/cart");
+			return t("empty.title");
+		};
+		export const C2 = async () => {
+			const t = await getTranslations("/product");
+			return t("page.imagesTitle");
+		};
+	`
+	const settings: PluginSettings = {
+		pathPattern: "./{language}.json",
+	}
+	const matches = parse(sourceCode, settings)
+	expect(matches).toHaveLength(2)
+	expect(matches[0]?.messageId).toBe("/cart.empty.title")
+	expect(matches[1]?.messageId).toBe("/product.page.imagesTitle")
 })
 
 it("should add the defined namespace by useTranslations hook", async () => {
@@ -231,7 +266,20 @@ it("should add the defined namespaces by getTranslations hook with namespace obj
 	expect(matches[0]?.messageId).toBe("Metadata.button.a")
 })
 
-it("should add the defined namespaces by getTranslations hook with namespace object variation two", async () => {
+it("should add the defined namespaces by getTranslations hook with namespace object variation 2", async () => {
+	const sourceCode = `
+		const { t } = await getTranslations({namespace: "Metadata", locale: props.params.locale});
+		<p>{t("button.a")}</p>
+	`
+	const settings: PluginSettings = {
+		pathPattern: "./{language}.json",
+	}
+	const matches = parse(sourceCode, settings)
+	expect(matches).toHaveLength(1)
+	expect(matches[0]?.messageId).toBe("Metadata.button.a")
+})
+
+it("should add the defined namespaces by getTranslations hook with namespace object variation 3", async () => {
 	const sourceCode = `
 		const { t } = await getTranslations({namespace: "Metadata"});
 		<p>{t("button.a")}</p>
@@ -242,4 +290,17 @@ it("should add the defined namespaces by getTranslations hook with namespace obj
 	const matches = parse(sourceCode, settings)
 	expect(matches).toHaveLength(1)
 	expect(matches[0]?.messageId).toBe("Metadata.button.a")
+})
+
+it("should add the defined namespace by useTranslations hook", async () => {
+	const sourceCode = `
+		const { t } = useTranslations('DirectoryPage');
+		<p>{t('title')}</p>
+	`
+	const settings: PluginSettings = {
+		pathPattern: "./{language}.json",
+	}
+	const matches = parse(sourceCode, settings)
+	expect(matches).toHaveLength(1)
+	expect(matches[0]?.messageId).toBe("DirectoryPage.title")
 })

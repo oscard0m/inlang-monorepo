@@ -467,7 +467,8 @@ function Breadcrumbs() {
  * The menu to select the branch.
  */
 function BranchMenu() {
-	const { activeBranch, setActiveBranch, branchNames, currentBranch } = useEditorState()
+	const { activeBranch, setActiveBranch, setBranchListEnabled, branchList, currentBranch } =
+		useEditorState()
 	return (
 		<sl-tooltip
 			prop:content="Select branch"
@@ -476,12 +477,15 @@ function BranchMenu() {
 			class="small"
 			style={{ "--show-delay": "1s" }}
 		>
-			<sl-dropdown prop:distance={8}>
+			<sl-dropdown prop:distance={8} on:sl-show={() => setBranchListEnabled(true)}>
 				<sl-button
 					slot="trigger"
 					prop:caret={true}
 					prop:size="small"
-					prop:loading={currentBranch() !== activeBranch() && activeBranch() !== undefined}
+					prop:loading={
+						(currentBranch() !== activeBranch() && activeBranch() !== undefined) ||
+						(branchList.loading && !branchList())
+					}
 				>
 					<div slot="prefix">
 						{/* branch icon from github */}
@@ -497,15 +501,25 @@ function BranchMenu() {
 				</sl-button>
 
 				<sl-menu class="w-48 min-w-fit">
-					<For each={branchNames()}>
-						{(branch) => (
-							<div onClick={() => setActiveBranch(branch)}>
-								<sl-menu-item prop:type="checkbox" prop:checked={currentBranch() === branch}>
-									{branch}
-								</sl-menu-item>
-							</div>
-						)}
-					</For>
+					<Show
+						when={branchList()}
+						fallback={<sl-menu-item prop:disabled={true}>Loading...</sl-menu-item>}
+					>
+						<For each={branchList()}>
+							{(branch) => (
+								<div
+									onClick={() => {
+										setActiveBranch(branch)
+										setBranchListEnabled(false) // prevent refetching after selecting branch
+									}}
+								>
+									<sl-menu-item prop:type="checkbox" prop:checked={currentBranch() === branch}>
+										{branch}
+									</sl-menu-item>
+								</div>
+							)}
+						</For>
+					</Show>
 				</sl-menu>
 			</sl-dropdown>
 		</sl-tooltip>
@@ -519,27 +533,25 @@ function ProjectMenu() {
 	const { project, activeProject, setActiveProject, projectList, currentBranch, activeBranch } =
 		useEditorState()
 
-	const activeProjectName = () => {
-		return (
-			activeProject()?.toString().split("/").at(-2) +
-			"/" +
-			activeProject()?.toString().split("/").at(-1)
-		)
-	}
-
-	const shortenProjectName = (projectPath: string) => {
+	const shortenProjectPath = (projectPath: string) => {
 		const projectPathArray = projectPath.split("/")
 		if (projectPathArray.length > 3) {
 			return (
-				"/" +
+				".../" +
 				projectPathArray.at(-3) +
 				"/" +
 				projectPathArray.at(-2) +
 				"/" +
 				projectPathArray.at(-1)
 			)
+		} else {
+			return "." + projectPath
 		}
-		return projectPath
+	}
+
+	const projectName = (projectPath: string) => {
+		const projectPathArray = projectPath.split("/")
+		return projectPathArray.at(-1)?.replace(".inlang", "")
 	}
 
 	return (
@@ -562,20 +574,23 @@ function ProjectMenu() {
 					<div slot="prefix">
 						<IconDescription class="-ml-1 w-5 h-5" />
 					</div>
-					{activeProject() ? activeProjectName() : "project"}
+					{activeProject() ? projectName(activeProject()!) : "project"}
 				</sl-button>
 
 				<sl-menu class="w-48 min-w-fit">
 					<For each={projectList()}>
 						{(project) => (
-							<div onClick={() => setActiveProject(project.projectPath)}>
-								<sl-menu-item
-									prop:type="checkbox"
-									prop:checked={activeProject() === project.projectPath}
-								>
-									{shortenProjectName(project.projectPath)}
-								</sl-menu-item>
-							</div>
+							<sl-menu-item
+								prop:type="checkbox"
+								prop:checked={activeProject() === project.projectPath}
+								onClick={() => setActiveProject(project.projectPath)}
+								class="flex items-center"
+							>
+								{projectName(project.projectPath)}
+								<span class="text-on-surface-variant/60 ml-2 text-xs">
+									{shortenProjectPath(project.projectPath)}
+								</span>
+							</sl-menu-item>
 						)}
 					</For>
 				</sl-menu>
@@ -706,7 +721,7 @@ function LintFilter(props: { clearFunction: any }) {
 			}}
 			class="filter border-0 focus:ring-background/100 p-0 m-0 text-sm animate-blendIn"
 		>
-			<div class={"flex items-center gap-2 ml-1 mr-0"} slot="prefix">
+			<div class="flex items-center gap-2 ml-1 mr-0" slot="prefix">
 				<p class="flex-grow-0 flex-shrink-0 text-sm font-medium text-left text-on-surface-variant">
 					Lint
 				</p>
@@ -729,7 +744,7 @@ function LintFilter(props: { clearFunction: any }) {
 				</Show>
 			</div>
 			<button slot="clear-icon" class="p-0.5">
-				<IconClose class="w-4 h-4" />
+				<IconClose width={20} height={20} />
 			</button>
 
 			<div class="flex px-3 gap-2 text-sm font-medium">
@@ -824,7 +839,7 @@ function IdsFilter(props: { clearFunction: any }) {
 							props.clearFunction
 						}}
 					>
-						<IconClose />
+						<IconClose width={20} height={20} />
 					</button>
 				</Show>
 			</div>

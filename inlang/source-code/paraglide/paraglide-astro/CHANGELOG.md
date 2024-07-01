@@ -1,5 +1,95 @@
 # @inlang/paraglide-astro
 
+## 0.1.32
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.72
+
+## 0.1.31
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.71
+
+## 0.1.30
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.70
+
+## 0.1.29
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.69
+
+## 0.1.28
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.68
+
+## 0.1.27
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.67
+
+## 0.1.26
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.66
+
+## 0.1.25
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.65
+
+## 0.1.24
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.64
+
+## 0.1.23
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.63
+
+## 0.1.22
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.62
+
+## 0.1.21
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.61
+
+## 0.1.20
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.60
+
+## 0.1.19
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.59
+
+## 0.1.18
+
+### Patch Changes
+
+- @inlang/paraglide-vite@1.2.58
+
 ## 0.1.17
 
 ### Patch Changes

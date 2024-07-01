@@ -1,5 +1,6 @@
 import { test, expect, afterAll, describe } from "vitest"
 import type { NodeishFilesystem, FileChangeInfo } from "./NodeishFilesystemApi.ts"
+// @ts-ignore
 import { createNodeishMemoryFs, toSnapshot, fromSnapshot } from "./memoryFs.ts"
 
 async function wait(time: number) {
@@ -278,7 +279,11 @@ const runFsTestSuite = async (
 
 		await fs.writeFile(`${placeholderPath}/file`, "")
 
-		await fs._createPlaceholder(placeholderPath + "/test")
+		await fs._createPlaceholder(placeholderPath + "/test", {
+			mode: "0o644",
+			rootHash: "asdf",
+			oid: "asdf",
+		})
 
 		expect(fs._isPlaceholder(placeholderPath + "/test")).toBe(true)
 		expect(fs._isPlaceholder(placeholderPath + "/noexists")).toBe(false)

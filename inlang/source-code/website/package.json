@@ -4,10 +4,10 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite",
-		"build": "node ./scripts/generateSitemap.js && npx @inlang/cli machine translate -f --project ../../../project.inlang --targetLanguageTags fr,it,pt-BR,sk,zh && vite build && tsc --noEmit",
+		"build": "node ./scripts/generateSitemap.js && paraglide-js compile --project ./website.inlang && npx @inlang/cli machine translate -f --project ./website.inlang --targetLanguageTags fr,it,pt-BR,sk,zh && vite build && tsc --noEmit",
 		"production": "NODE_ENV=production tsx ./src/server/main.ts ",
 		"---- TEST ----------------------------------------------------------": "",
-		"test": "vitest run --passWithNoTests && paraglide-js compile --project ../../../project.inlang && npx @inlang/cli lint --project ../../../project.inlang --languageTags de,en ",
+		"test": "vitest run --passWithNoTests && paraglide-js compile --project ./website.inlang && npx @inlang/cli lint --project ./website.inlang --languageTags de,en ",
 		"lint": "eslint ./src --fix",
 		"format": "prettier ./src --write",
 		"clean": "rm -rf ./dist ./node_modules"
@@ -84,10 +84,10 @@
 		"patch-package": "8.0.0",
 		"postcss": "^8.4.18",
 		"tailwindcss": "^3.3.0",
-		"typescript": "5.2.2",
+		"typescript": "^5.5.2",
 		"unplugin-icons": "^0.15.0",
 		"vike": "0.4.156",
-		"vite": "4.5.0",
+		"vite": "^4.5.0",
 		"vite-plugin-solid": "2.7.0",
 		"vitest": "0.34.6"
 	},
