@@ -1,5 +1,45 @@
 # @inlang/paraglide-next
 
+## 0.7.4
+
+### Patch Changes
+
+- fix: first ssr render leading to a ReferenceError 'document' not defined error. https://github.com/opral/monorepo/pull/3248
+
+## 0.7.3
+
+### Patch Changes
+
+- 49b54dc: allow for next.config.ts in paraglide cli init command https://github.com/opral/monorepo/pull/3199
+
+## 0.7.2
+
+### Patch Changes
+
+- fix "Error: `headers` was called outside a request scope."
+
+  - https://github.com/opral/inlang-paraglide-js/issues/245#issuecomment-2450130294
+
+## 0.7.1
+
+### Patch Changes
+
+- fix: The headers in `getLanguage()` where not awaited.
+
+## 0.7.0
+
+### Minor Changes
+
+- [BREAKING] Support for Next.js 15.
+
+  The `getLanguage()` function is now async on the server. Starting with latest RC of Next.js 15 (RC 2), the request APIs (including headers()) is async: nextjs.org/blog/next-15-rc2#async-request-apis-breaking-change.
+
+  PR https://github.com/opral/monorepo/pull/3188.
+
+  - stay on v0.6 for Next.js <15
+  - upgrade to v0.7 for Next.js >=15
+  - no major release to avoid releasing a 1.0 version
+
 ## 0.6.0
 
 ### Minor Changes

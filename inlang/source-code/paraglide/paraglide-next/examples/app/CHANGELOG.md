@@ -1,5 +1,40 @@
 # @inlang/paraglide-next-example-app
 
+## 0.2.33
+
+### Patch Changes
+
+- Updated dependencies
+  - @inlang/paraglide-next@0.7.4
+
+## 0.2.32
+
+### Patch Changes
+
+- Updated dependencies [49b54dc]
+  - @inlang/paraglide-next@0.7.3
+
+## 0.2.31
+
+### Patch Changes
+
+- Updated dependencies
+  - @inlang/paraglide-next@0.7.2
+
+## 0.2.30
+
+### Patch Changes
+
+- Updated dependencies
+  - @inlang/paraglide-next@0.7.1
+
+## 0.2.29
+
+### Patch Changes
+
+- Updated dependencies
+  - @inlang/paraglide-next@0.7.0
+
 ## 0.2.28
 
 ### Patch Changes
