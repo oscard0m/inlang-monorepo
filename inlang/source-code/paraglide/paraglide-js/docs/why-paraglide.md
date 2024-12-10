@@ -10,11 +10,11 @@
 </doc-features>
 
 
-With Paraglide's treeshakeable messages, each page only loads the messages it actually uses. Incremental loading like this would usually take forever to get right, with Paraglide you get it for free.
+With Paraglide's treeshakeable messages, each page only bundles the messages it actually uses with the exception that Paraglide JS loads all languages till [#88](https://github.com/opral/inlang-paraglide-js/issues/88) is solved. The inflection point of only bundling the used messages but for all languages is around 10-20 languages, dependent on the number of messages used. Read [scaling](https://inlang.com/m/gerre34r/library-inlang-paraglideJs/scaling) for more information. 
 
 # Use it with your Favorite Framework
 
-Paraglide is framework agnostic, but there are framework-specific libraries available. If there is one for your framework you will want to follow its documentation instead. If there isn't, read on.
+Paraglide is framework agnostic, but there are framework-specific adapters available. 
 
 <doc-links>
 	<doc-link title="Paraglide-Next" icon="tabler:brand-nextjs" href="/m/osslbuzt/paraglide-next-i18n" description="Go to Library"></doc-link>
@@ -35,3 +35,8 @@ A few recent comments.
 <doc-comment text="Awesome library 🙂 Thanks so much! 1) The docs were simple and straight forward 2) Everything just worked.. no headaches" author="Dimitry" icon="mdi:discord" data-source="https://discord.com/channels/897438559458430986/1083724234142011392/1225658097016766574"></doc-comment>
 <doc-comment text="Thank you for that huge work you have done and still doing!" author="ZerdoX-x" icon="mdi:github"></doc-comment>
 </doc-comments>
+
+# When is Paraglide JS not the right choice?
+
+- Variant are not supported yet (pluralization, gendering) see https://github.com/opral/inlang-paraglide-js/issues/201
+- You have more than 10 languages and care about minimum bundle sizes. A runtime based i18n library might be better for you. See https://inlang.com/m/gerre34r/library-inlang-paraglideJs/scaling.
