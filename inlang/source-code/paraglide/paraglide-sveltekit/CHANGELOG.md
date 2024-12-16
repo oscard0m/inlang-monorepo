@@ -1,5 +1,70 @@
 # @inlang/paraglide-sveltekit
 
+## 0.15.0
+
+### Minor Changes
+
+- 88b87b9: Updates internal components to Svelte 5 rune syntax. Closes https://github.com/opral/inlang-paraglide-js/issues/262 and fixes https://github.com/opral/inlang-paraglide-js/issues/272.
+
+## 0.14.0
+
+### Minor Changes
+
+- 80727ee: Add `experimentalUseVirtualModules` option to use the `$paraglide` virtual module instead of writing files to disk. Closes https://github.com/opral/inlang-paraglide-js/issues/264
+
+  - good for projects that can't have `allowJs: true` in their TypeScript config https://github.com/opral/inlang-paraglide-js/issues/238
+  - less clutter in the compiled output directory https://github.com/opral/inlang-paraglide-js/issues/189
+
+  ```diff
+  import { paraglide } from "@inlang/paraglide-sveltekit/vite"
+  import { defineConfig } from "vite"
+
+  export default defineConfig({
+  	plugins: [
+  		paraglide({
+  			project: "./project.inlang",
+  			outdir: "./src/lib/paraglide",
+  +			experimentalUseVirtualModules: true,
+  		}),
+      // ... other vite plugins
+  	],
+  })
+  ```
+
+  The compiled output will only emit the `runtime.d.ts` and `messages.d.ts` files.
+
+  ```diff
+  .
+  └── src/
+      └── paraglide/
+  -        ├── messages/
+  -        │   ├── de.js
+  -        │   ├── en.js
+  -        │   ├── fr.js
+  -        │   └── ...
+  -        ├── messages.js
+  +        ├── messages.d.ts
+  -        └── runtime.js
+  +        ├── runtime.d.ts
+  ```
+
+### Patch Changes
+
+- Updated dependencies [80727ee]
+  - @inlang/paraglide-vite@1.3.0
+
+## 0.13.1
+
+### Patch Changes
+
+- reverts 0.13.0 because it leads to a crash in production https://github.com/opral/inlang-paraglide-js/issues/272
+
+## 0.13.0
+
+### Minor Changes
+
+- 1ea4bd8: Svelte 5 runes are used in the Paraglide component. Closes https://github.com/opral/inlang-paraglide-js/issues/262
+
 ## 0.12.1
 
 ### Patch Changes

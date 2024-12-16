@@ -28,26 +28,6 @@ services:
     domains:
       - inlang.com
 
-  - name: lix-website
-    type: web
-    runtime: node
-    region: frankfurt
-    plan: starter
-    branch: main
-    pullRequestPreviewsEnabled: false
-    buildCommand: pnpm --filter lix-website i && pnpm --filter lix-website build
-    startCommand: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 pnpm --filter lix-website start
-    autoDeploy: true
-    envVars:
-      - fromGroup: production
-      - key: PORT
-        value: 3002
-    buildFilter:
-      paths:
-        - lix/website/**
-    domains:
-      - lix.opral.com
-
   - name: fink2
     type: web
     runtime: static
@@ -65,16 +45,60 @@ services:
     envVars:
       - fromGroup: production
 
+  - name: lix-website-server
+    type: web
+    runtime: node
+    region: frankfurt
+    plan: starter
+    branch: lix-integration
+    pullRequestPreviewsEnabled: false
+    buildCommand: pnpm --filter lix-website-server... i && pnpm --filter lix-website-server... build
+    startCommand: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 pnpm --filter lix-website-server production
+    autoDeploy: true
+    envVars:
+      - fromGroup: production
+      - key: PORT
+        value: 3005
+    buildFilter:
+      paths:
+        - packages/lix-website-server/**
+        - packages/lix-website/**
+        - packages/lix-file-manager/**
+        - packages/csv-app/**
+    domains:
+      - lix.opral.com
+
+  - name: lix-host
+    type: web
+    runtime: node
+    region: frankfurt
+    plan: starter
+    branch: lix-integration
+    pullRequestPreviewsEnabled: false
+    buildCommand: pnpm --filter @lix-js/host... i && pnpm --filter @lix-js/host... build
+    startCommand: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 pnpm --filter @lix-js/host start
+    autoDeploy: true
+    envVars:
+      - fromGroup: production
+      - key: PORT
+        value: 3000
+    buildFilter:
+      paths:
+        - packages/lix-host/**
+        - packages/lix-sdk/**
+    domains:
+      - lix.host
+
   - name: csv
     type: web
     runtime: static
     autoDeploy: true
     branch: lix-integration
-    staticPublishPath: ./lix/packages/csv-app2/dist
-    buildCommand: pnpm install && pnpm run --filter @lix-js/csv-app2... build
+    staticPublishPath: ./packages/csv-app/dist
+    buildCommand: pnpm install && pnpm run --filter csv-app... build
     buildFilter:
       paths:
-        - lix/packages/csv-app2/**
+        - packages/csv-app/**
     envVars:
       - fromGroup: production
 
